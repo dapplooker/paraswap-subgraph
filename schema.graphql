@@ -1,6 +1,34 @@
-type ExampleEntity @entity {
+type Swap @entity {
   id: ID!
-  count: BigInt!
   initiator: Bytes! # address
   beneficiary: Bytes! # address
+  srcToken: Bytes!
+  destToken: Bytes!
+  srcAmount: BigInt!
+  receivedAmount: BigInt!
+  expectedAmount: BigInt!
+  referrer: String!
+  txHash: Bytes!
+  txOrigin: Bytes! # address
+  txTarget: Bytes # address
+  txGasUsed: BigInt!
+  txGasPrice: BigInt!
+  blockHash: Bytes!
+  blockNumber: BigInt!
+  timestamp: BigInt!
+}
+
+type Fee @entity {
+  id: ID!
+  fee: BigInt!
+  partnerShare: BigInt!
+  paraswapShare: BigInt!
+  txHash: Bytes!
+  txOrigin: Bytes! # address
+  txTarget: Bytes # address
+  txGasUsed: BigInt!
+  txGasPrice: BigInt!
+  blockHash: Bytes!
+  blockNumber: BigInt!
+  timestamp: BigInt!
 }

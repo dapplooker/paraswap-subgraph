@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   AugustusSwapperV2,
   Bought,
@@ -7,66 +7,67 @@ import {
   OwnershipTransferred,
   Paused,
   Swapped,
-  Unpaused
-} from "../generated/AugustusSwapperV2/AugustusSwapperV2"
-import { ExampleEntity } from "../generated/schema"
+  Unpaused,
+} from "../generated/AugustusSwapperV2/AugustusSwapperV2";
+import { Fee, Swap } from "../generated/schema";
 
-export function handleBought(event: Bought): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
-
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (entity == null) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
-
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
-
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
-
-  // Entity fields can be set based on event parameters
-  entity.initiator = event.params.initiator
-  entity.beneficiary = event.params.beneficiary
-
-  // Entities can be written to the store with `.save()`
-  entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.getFeeWallet(...)
-  // - contract.getPartnerRegistry(...)
-  // - contract.getTokenTransferProxy(...)
-  // - contract.getVersion(...)
-  // - contract.getWhitelistAddress(...)
-  // - contract.owner(...)
-  // - contract.paused(...)
-}
+export function handleBought(event: Bought): void {}
 
 export function handleDonation(event: Donation): void {}
 
-export function handleFeeTaken(event: FeeTaken): void {}
+export function handleFeeTaken(event: FeeTaken): void {
+  let entity = Fee.load(event.transaction.from.toHex());
+  if (entity == null) {
+    entity = new Fee(event.transaction.from.toHex());
+  }
+
+  // Entity fields can be set based on event parameters
+  entity.fee = event.params.fee;
+  entity.partnerShare = event.params.partnerShare;
+  entity.paraswapShare = event.params.partnerShare;
+  entity.txHash = event.transaction.hash;
+  entity.txOrigin = event.transaction.from;
+  entity.txTarget = event.transaction.to;
+  entity.txGasUsed = event.transaction.gasUsed;
+  entity.txGasPrice = event.transaction.gasPrice;
+  entity.blockHash = event.block.hash;
+  entity.blockNumber = event.block.number;
+  entity.timestamp = event.block.timestamp;
+
+  // Entities can be written to the store with `.save()`
+  entity.save();
+}
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
 export function handlePaused(event: Paused): void {}
 
-export function handleSwapped(event: Swapped): void {}
+export function handleSwapped(event: Swapped): void {
+  let entity = Swap.load(event.transaction.from.toHex());
+  if (entity == null) {
+    entity = new Swap(event.transaction.from.toHex());
+  }
+
+  // Entity fields can be set based on event parameters
+  entity.initiator = event.params.initiator;
+  entity.beneficiary = event.params.beneficiary;
+  entity.srcToken = event.params.srcToken;
+  entity.destToken = event.params.destToken;
+  entity.srcAmount = event.params.srcAmount;
+  entity.receivedAmount = event.params.receivedAmount;
+  entity.expectedAmount = event.params.expectedAmount;
+  entity.referrer = event.params.referrer;
+  entity.txHash = event.transaction.hash;
+  entity.txOrigin = event.transaction.from;
+  entity.txTarget = event.transaction.to;
+  entity.txGasUsed = event.transaction.gasUsed;
+  entity.txGasPrice = event.transaction.gasPrice;
+  entity.blockHash = event.block.hash;
+  entity.blockNumber = event.block.number;
+  entity.timestamp = event.block.timestamp;
+
+  // Entities can be written to the store with `.save()`
+  entity.save();
+}
 
 export function handleUnpaused(event: Unpaused): void {}
