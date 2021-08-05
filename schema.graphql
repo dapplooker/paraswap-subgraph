@@ -32,3 +32,26 @@ type Fee @entity {
   blockNumber: BigInt!
   timestamp: BigInt!
 }
+
+type User @entity {
+  id: ID!
+  address: Bytes!
+  blockHash: Bytes!
+  blockNumber: BigInt!
+  joinTimestamp: BigInt!
+}
+
+type Token @entity {
+  id: ID!
+  address: Bytes!
+  srcTotalAmount: BigInt!
+  receivedTotalAmount: BigInt!
+}
+
+type Paraswap @entity {
+  id: ID!
+  totalSrcAmount: BigInt!
+  totalReceivedAmount: BigInt!
+  totalSwaps: BigInt!
+  totalUsers: BigInt!
+}
