@@ -5,6 +5,7 @@
 # Entities and Attributes #
 
 ## Swap ##
+> Captures swap transactions details and attributes.
      id,
      initiator,
      beneficiary,
