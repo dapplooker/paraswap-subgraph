@@ -26,7 +26,9 @@
      timestamp
      
      
-## Fee ##
+## Fee 
+> Captures fees transaction details and attributes
+##
      id,
      fee,
      partnerShare,
@@ -41,7 +43,9 @@
      timestamp
      
      
-## User ##
+## User
+> Captures list of users using Paraswap Dapp
+##
      id,
      address,
      blockHash,
@@ -49,14 +53,18 @@
      joinTimestamp
      
      
-## Token ##
+## Token
+> Captures list of tokens supported in Paraswap Dapp
+##
      id,
      address,
      srcTotalAmount,
      receivedTotalAmount
      
      
-## Paraswap ##
+## Paraswap
+> Captures Paraswap Dapp aggregated details like total swaps, total users, total amounts etc
+##
      id,
      totalSrcAmount,
      totalReceivedAmount,
@@ -64,4 +72,4 @@
      totalUser
 
 
-## Subgraph URL: https://thegraph.com/legacy-explorer/subgraph/dapplooker/paraswap ##
+Subgraph URL: https://thegraph.com/legacy-explorer/subgraph/dapplooker/paraswap
